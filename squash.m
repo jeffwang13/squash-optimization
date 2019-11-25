@@ -18,7 +18,7 @@
 % opponentY - y position of opponent (m)
 
 function [ result ] = squash(theta_v, theta_h)
-    % For now, 1 <= vertical hit angle <= 120, -60 <= horizontal <= 60
+    % For now, 5 <= vertical hit angle <= 89, -60 <= horizontal <= 60
     hitZ = 0.482; % m
     runningSpeed = 3.71; % m/s
     hitVelocity = 40; % m/s
@@ -26,19 +26,19 @@ function [ result ] = squash(theta_v, theta_h)
     robotY = 5; % m
     opponentX = 6 ; % m
     opponentY = 2; % m
-    
-    hitVZ = hitVelocity * sin(theta_v);
-    tHitGround = max(roots([-4.905 hitVZ -hitZ]));
-    d2x = hitVelocity * cos(theta_v) * cos(theta_h) * tHitGround - robotX;
+
+    hitVZ = hitVelocity * sind(theta_v);
+    tHitGround = max(roots([4.905 -hitVZ hitZ]));
+    d2x = hitVelocity * cosd(theta_v) * cosd(theta_h) * tHitGround - robotX;
     if theta_h <= 0
-        d2y = robotY - hitVelocity * cos(theta_v) * sin(theta_h) * tHitGround;
+        d2y = robotY - hitVelocity * cosd(theta_v) * sind(theta_h) * tHitGround;
     else
-        d2y = robotY + hitVelocity * cos(theta_v) * sin(theta_h) * tHitGround;
+        d2y = robotY + hitVelocity * cosd(theta_v) * sind(theta_h) * tHitGround;
     end
     dOpponentFromBall = sqrt((d2x - opponentX).^2 + (d2y - opponentY).^2);
     
     
     % Result is the time it takes for the opponent to get to the ball after
     % it lands (s)
-    result = (runningSpeed * dOpponentFromBall) - tHitGround;
+    result = (dOpponentFromBall / runningSpeed) - tHitGround;
 end
