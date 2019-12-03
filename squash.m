@@ -18,14 +18,15 @@
 % opponentY - y position of opponent (m) (0 - 6.4)
 
 function [ result ] = squash(angles)
-    % For now, 5 <= vertical hit angle <= 89, -60 <= horizontal <= 60
+    % For now, 0 <= vertical hit angle <= 25.11, -18.17 <= horizontal <=
+    % 18.17
     hitZ = 0.482; % m
     runningSpeed = 6; % m/s
     hitVelocity = 40.0; % m/s
     robotX = 9.25; % m
     robotY = 3.2; % m
     opponentX = 8.75; % m
-    opponentY = 1; % m
+    opponentY = 3.2; % m
     cor = 0.434; % coeficcient of restitution
 
     hitVZ = hitVelocity * sind(angles(1));
